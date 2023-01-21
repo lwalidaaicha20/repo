@@ -17,10 +17,10 @@ read -p "choose ngrok region: " CRP
 ./ngrok tcp --region $CRP 3388 &>/dev/null &
 clear
 echo Downloading File From akuh.net
-apt install qemu qemu-system qemu-system-x86-64 -y
+sudo apt install qemu qemu-system qemu-system-x86-64 -y
 echo "Wait"
 echo "Starting Windows"
-qemu-system-x86_64 -enable-kvm -cpu host -hda lite11.qcow2 -boot d -net nic -smp cores=2 -net user,hostfwd=tcp::30889-:3389 $custom_param_ram -nographic 
+qemu-system-x86_64 -hda w10x64.img -m 4G -smp cores=6 -net user,hostfwd=tcp::3388-:3389 -net nic -object rng-random,id=rng0,filename=/dev/urandom -device virtio-rng-pci,rng=rng0 -vga vmware -nographic &>/dev/null &
 clear
 echo RDP Address:
 curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"tcp:..([^"]*).*/\1/p'
